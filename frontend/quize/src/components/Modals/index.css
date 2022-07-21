@@ -1,0 +1,30 @@
+#outlined-basic{
+  /* width:400px */
+}
+
+.modal_wrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(100%);
+  transition: 0.5s;
+
+  /* pointer-events: none; */
+}
+
+.modal_wrapper.open {
+  height: 100%;
+  display: flex;
+  opacity: 1;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  justify-items: center;
+}
+
+
+.modal_wrapper.close {
+  height: 0;
+}
