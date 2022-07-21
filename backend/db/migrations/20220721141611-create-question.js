@@ -9,6 +9,10 @@ module.exports = {
       },
       theme_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Themes',
+          key: 'id',
+        },
       },
       description: {
         type: Sequelize.TEXT,
