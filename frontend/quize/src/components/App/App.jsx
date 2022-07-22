@@ -10,6 +10,7 @@ import {regUserAC} from "../redux/actionCreators/userAC";
 
 
 import { GeistProvider, CssBaseline } from '@geist-ui/core'
+import Questions from "../TableQuestion/TableQuestion";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             {/*    */}
             {/*    </>*/}
             {/*    }*/}
+            <Route path='/' element={<Questions/>}/>
         </Routes>
       </BrowserRouter>
     </div>

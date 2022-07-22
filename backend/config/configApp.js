@@ -7,6 +7,8 @@ const morgan = require('morgan');
 // const reactSsrMiddleware = require('../middlewares/reactSsrMiddleware');
 // const getUser = require('../middlewares/getUser');
 
+const indexRouter = require('../routers/router');
+
 const sessionConfig = {
   store: new FileStore(),
   name: 'user_sid',
@@ -26,6 +28,7 @@ function config(app) {
   app.use(express.json());
   app.use(session(sessionConfig));
   app.use(morgan('dev'));
+  app.use(indexRouter);
   // app.use(getUser);
 }
 

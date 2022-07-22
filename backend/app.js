@@ -4,6 +4,6 @@ const config = require('./config/configApp');
 
 config(app);
 
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 4000;
 
-app.listen(PORT, () => console.log('gogogo'));
+app.listen(4000, () => console.log('gogogo'));
