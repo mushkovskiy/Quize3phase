@@ -1,217 +1,138 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { register } from "./RegistrationStyles";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {useDispatch} from 'react-redux'
+import { userAC } from '../redux/actionCreators/userAC';
+import {useNavigate} from "react-router-dom";
 
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Paper from "@material-ui/core/Paper";
-import Avatar from "@material-ui/core/Avatar";
-import { FormControl, Input, InputLabel, Button } from "@material-ui/core";
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import IconButton from "@material-ui/core/IconButton";
-import ErrorIcon from "@material-ui/icons/Error";
-import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
-import VisibilityOffTwoToneIcon from "@material-ui/icons/VisibilityOffTwoTone";
-import CloseIcon from "@material-ui/icons/Close";
+const theme = createTheme();
 
-class Registration extends Component {
-    state = {
-        email: "",
-        password: "",
-        passwordConfrim: "",
-        hidePassword: true,
-        error: null,
-        errorOpen: false
-    };
-
-    errorClose = e => {
-        this.setState({
-            errorOpen: false
-        });
-    };
-
-    handleChange = name => e => {
-        this.setState({
-            [name]: e.target.value
-        });
-    };
-
-    passwordMatch = () => this.state.password === this.state.passwordConfrim;
-
-    showPassword = () => {
-        this.setState(prevState => ({ hidePassword: !prevState.hidePassword }));
-    };
-
-    isValid = () => {
-        if (this.state.email === "") {
-            return false;
+export default function Registration() {
+    // const dispatch=useDispatch()
+    let navigate = useNavigate()
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const body ={
+            name: data.get('name'),
+            password: data.get('email'),
+            email: data.get('password')
         }
-        return true;
-    };
-    submitRegistration = e => {
-        e.preventDefault();
-        if (!this.passwordMatch()) {
-            this.setState({
-                errorOpen: true,
-                error: "Passwords don't match"
-            });
-        }
-        const newUserCredentials = {
-            email: this.state.email,
-            password: this.state.password,
-            passwordConfrim: this.state.passwordConfrim
-        };
-        console.log("this.props.newUserCredentials", newUserCredentials);
-        //dispath to userActions
+        fetch('http://localhost:4000/registration',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            body: JSON.stringify(body)
+        })
+            // .then(response =>response.json())
+            // .then(data=>dispatch(userAC(data)))
+        navigate('/login')
     };
 
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.main}>
+    return (
+        <ThemeProvider theme={theme}>
+            <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
-
-                <Paper className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <PeopleAltIcon className={classes.icon} />
-                    </Avatar>
-                    <form
-                        className={classes.form}
-                        onSubmit={() => this.submitRegistration}
+                <Grid
+                    item
+                    xs={false}
+                    sm={4}
+                    md={7}
+                    sx={{
+                        backgroundImage: 'url(https://avatars.mds.yandex.net/get-kinopoisk-image/4303601/3743aaab-f13b-4b27-9b31-b5c341b44921/1920x)',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundColor: (t) =>
+                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
+                />
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                    <Box
+                        sx={{
+                            my: 8,
+                            mx: 4,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
                     >
-                        <FormControl required fullWidth margin="normal">
-                            <InputLabel htmlFor="email" className={classes.labels}>
-                                e-mail
-                            </InputLabel>
-                            <Input
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Registration
+                        </Typography>
+                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="name"
+                                label="name"
+                                name="name"
+                                autoComplete="name"
+                                autoFocus
+                            />
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
                                 name="email"
-                                type="email"
                                 autoComplete="email"
-                                className={classes.inputs}
-                                disableUnderline={true}
-                                onChange={this.handleChange("email")}
+                                autoFocus
                             />
-                        </FormControl>
-
-                        <FormControl required fullWidth margin="normal">
-                            <InputLabel htmlFor="password" className={classes.labels}>
-                                password
-                            </InputLabel>
-                            <Input
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
                                 name="password"
-                                autoComplete="password"
-                                className={classes.inputs}
-                                disableUnderline={true}
-                                onChange={this.handleChange("password")}
-                                type={this.state.hidePassword ? "password" : "input"}
-                                endAdornment={
-                                    this.state.hidePassword ? (
-                                        <InputAdornment position="end">
-                                            <VisibilityOffTwoToneIcon
-                                                fontSize="default"
-                                                className={classes.passwordEye}
-                                                onClick={this.showPassword}
-                                            />
-                                        </InputAdornment>
-                                    ) : (
-                                        <InputAdornment position="end">
-                                            <VisibilityTwoToneIcon
-                                                fontSize="default"
-                                                className={classes.passwordEye}
-                                                onClick={this.showPassword}
-                                            />
-                                        </InputAdornment>
-                                    )
-                                }
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
                             />
-                        </FormControl>
-
-                        <FormControl required fullWidth margin="normal">
-                            <InputLabel htmlFor="passwordConfrim" className={classes.labels}>
-                                confrim password
-                            </InputLabel>
-                            <Input
-                                name="passwordConfrim"
-                                autoComplete="passwordConfrim"
-                                className={classes.inputs}
-                                disableUnderline={true}
-                                onClick={this.state.showPassword}
-                                onChange={this.handleChange("passwordConfrim")}
-                                type={this.state.hidePassword ? "password" : "input"}
-                                endAdornment={
-                                    this.state.hidePassword ? (
-                                        <InputAdornment position="end">
-                                            <VisibilityOffTwoToneIcon
-                                                fontSize="default"
-                                                className={classes.passwordEye}
-                                                onClick={this.showPassword}
-                                            />
-                                        </InputAdornment>
-                                    ) : (
-                                        <InputAdornment position="end">
-                                            <VisibilityTwoToneIcon
-                                                fontSize="default"
-                                                className={classes.passwordEye}
-                                                onClick={this.showPassword}
-                                            />
-                                        </InputAdornment>
-                                    )
-                                }
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
                             />
-                        </FormControl>
-                        <Button
-                            disabled={!this.isValid()}
-                            disableRipple
-                            fullWidth
-                            variant="outlined"
-                            className={classes.button}
-                            type="submit"
-                            onClick={this.submitRegistration}
-                        >
-                            Join
-                        </Button>
-                    </form>
-
-                    {this.state.error ? (
-                        <Snackbar
-                            variant="error"
-                            key={this.state.error}
-                            anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "center"
-                            }}
-                            open={this.state.errorOpen}
-                            onClose={this.errorClose}
-                            autoHideDuration={3000}
-                        >
-                            <SnackbarContent
-                                className={classes.error}
-                                message={
-                                    <div>
-                    <span style={{ marginRight: "8px" }}>
-                      <ErrorIcon fontSize="large" color="error" />
-                    </span>
-                                        <span> {this.state.error} </span>
-                                    </div>
-                                }
-                                action={[
-                                    <IconButton
-                                        key="close"
-                                        aria-label="close"
-                                        onClick={this.errorClose}
-                                    >
-                                        <CloseIcon color="error" />
-                                    </IconButton>
-                                ]}
-                            />
-                        </Snackbar>
-                    ) : null}
-                </Paper>
-            </div>
-        );
-    }
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                Sign In
+                            </Button>
+                            <Grid container>
+                                <Grid item xs>
+                                    <Link href="#" variant="body2">
+                                        Forgot password?
+                                    </Link>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="#" variant="body2">
+                                        {"Don't have an account? Sign Up"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
+                </Grid>
+            </Grid>
+        </ThemeProvider>
+    );
 }
-
-export default withStyles(register)(Registration);
