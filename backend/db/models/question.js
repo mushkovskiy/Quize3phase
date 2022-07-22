@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Question extends Model {
     /**
@@ -9,18 +9,50 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
+    static associate({ Theme, Game }) {
+      Question.Theme = Question.belongsTo(Theme, { foreignKey: 'theme_id' });
+      Question.User = Question.belongsToMany(Game, {
+        foreignKey: 'question_id',
+        otherKey: 'game_id',
+        through: 'GameQuestion',
+      });
     }
   }
   Question.init({
-    theme_id: DataTypes.INTEGER,
-    description: DataTypes.TEXT,
-    answer: DataTypes.TEXT,
-    score: DataTypes.INTEGER
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
+    theme_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Themes',
+        key: 'id',
+      },
+    },
+    description: {
+      type: DataTypes.TEXT,
+    },
+    answer: {
+      type: DataTypes.TEXT,
+    },
+    score: {
+      type: DataTypes.INTEGER,
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
   }, {
     sequelize,
     modelName: 'Question',
+    tableName: 'Questions',
   });
   return Question;
 };

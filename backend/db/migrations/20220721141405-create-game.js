@@ -9,6 +9,10 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
       },
       total_score: {
         type: Sequelize.INTEGER,
@@ -30,3 +34,5 @@ module.exports = {
     await queryInterface.dropTable('Games');
   },
 };
+
+

@@ -9,9 +9,17 @@ module.exports = {
       },
       game_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Games',
+          key: 'id',
+        },
       },
       question_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Questions',
+          key: 'id',
+        },
       },
       time: {
         type: Sequelize.INTEGER,
