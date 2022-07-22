@@ -1,0 +1,10 @@
+.background {
+    background-image: url('https://cont.ws/uploads/pic/2019/8/265542_900%20%281%29.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.text {
+    color:red;
+    font-size: 24px;
+}

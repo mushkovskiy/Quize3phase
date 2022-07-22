@@ -101,7 +101,7 @@ const items = [
         contentPosition: "right",
         Items: [
             {
-                Name: "Идущий в гору – проиграет,",
+                Name: "Идущий в гору–проиграет,",
                 Image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXKjAplW78271yPq3iHFv5DxeyPeJK515Jt-xJA-VmQnC7G2YSywQkasOZfNQEw-GKYz0&usqp=CAU"
             },
             {

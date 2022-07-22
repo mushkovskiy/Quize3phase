@@ -1,0 +1,18 @@
+.table {
+    width: 100%;
+    border: 1px dashed #aaaaaa;
+    border-collapse: collapse;
+}
+
+.table td {
+    padding: 5px 10px;
+    border: 1px dashed #aaaaaa;
+}
+
+
+.body {
+    background-image: url("https://cont.ws/uploads/pic/2019/8/265542_900%20%281%29.jpg");
+    background-size: cover;
+    width: 1200px;
+    height: 1200px;
+}

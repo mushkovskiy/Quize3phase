@@ -28,3 +28,8 @@
 .modal_wrapper.close {
   height: 0;
 }
+
+.text-field {
+width: 600px;
+  height: auto;
+}

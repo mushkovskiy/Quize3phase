@@ -10,13 +10,13 @@ module.exports = {
      * }], {});
     */
     await queryInterface.bulkInsert('Themes', [{
-      title: 'История',
+      title: 'наркокартель',
       createdAt: new Date(),
       updatedAt: new Date(),
 
     },
     {
-      title: 'Спорт',
+      title: 'угадай трэк',
       createdAt: new Date(),
       updatedAt: new Date(),
 

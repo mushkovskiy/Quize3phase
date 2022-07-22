@@ -1,6 +1,6 @@
 const regRouter = require('express').Router();
 const bcrypt = require('bcrypt');
-const { User } = require('../db/models');
+const { User, Game } = require('../db/models');
 
 regRouter.post('/registration',async (req, res) => {
         const {
@@ -8,6 +8,7 @@ regRouter.post('/registration',async (req, res) => {
             email,
             password,
         } = req.body;
+    console.log(req.body)
         const thisUser = await User.findOne({ where: { email } });
         if (thisUser) {
             res.json({message: 'Такой пользователь уже существует'})
@@ -54,6 +55,17 @@ regRouter.post('/login', async (req, res) => {
     }
 });
 
+
+regRouter.post('/addresults',async (req,res)=> {
+    const { total_score } = req.body
+    console.log(req.body)
+    const game = await Game.create({
+        total_score,
+        user_id: req.session.user.id,
+        isfinished: true
+    });
+    console.log(game)
+})
 // Ручка для кнопки(ссылки) логаута
 regRouter.get('/logout', async (req, res) => {
     // Удаляем при этом сессию для этого юзера

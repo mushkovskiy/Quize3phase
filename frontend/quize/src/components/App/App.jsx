@@ -10,6 +10,8 @@ import {userAC} from "../redux/actionCreators/userAC";
 import Registration from "../Registration/Registration";
 import Login from "../Login/Login";
 import Main from "../Main/Main";
+import TableQuestion from "../TableQuestion/TableQuestion";
+import PersonalCabinet from "../PersonalCabinet/PersonalCabinet";
 
 
 
@@ -28,6 +30,7 @@ function App() {
       })
         const result = await res.json()
         // console.log(result)
+        console.log(res.status)
         if (res.status <400) {
             dispatch(userAC(result))
         }
@@ -44,6 +47,8 @@ function App() {
               <Route path="/" element={<Registration />} />
               <Route path="/login" element={<Login />} />
               <Route path="/main" element={<Main />} />
+              <Route path="/game" element={<TableQuestion />} />
+              <Route path="/pc" element={<PersonalCabinet />} />
             {/*{user.name &&*/}
             {/*  <>*/}
             {/*    <Route path="/main" element={<Home />} />*/}
